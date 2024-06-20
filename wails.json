@@ -1,0 +1,13 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "Dropbox Sync Skipper",
+  "outputfilename": "dropboxskipper",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "Jun Murakami",
+    "email": "126404131+Jun-Murakami@users.noreply.github.com"
+  }
+}
