@@ -81,7 +81,7 @@ func checkAttribute(path string, attr string) bool {
 }
 
 func (a *App) SelectFolder() (string, error) {
-    folder, err := wailsRuntime.OpenDirectoryDialog(a.ctx, wailsRuntime.OpenDialogOptions{Title: "Please select Dropbox folder."})
+    folder, err := wailsRuntime.OpenDirectoryDialog(a.ctx, wailsRuntime.OpenDialogOptions{Title: "Please select Dropbox folder or a folder within it."})
     if err != nil {
         return "", err
     }
