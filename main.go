@@ -19,7 +19,7 @@ import (
 //go:embed all:frontend/dist
 var assets embed.FS
 
-func (a *App) ListFiles(root string, keywords string) ([][2]interface{}, error) {
+func (a *App) ListFiles(root string, keywords string, folderOnly bool) ([][2]interface{}, error) {
     ctx, cancel := context.WithCancel(a.ctx)
     a.cancel = cancel
     defer cancel()
@@ -39,9 +39,15 @@ func (a *App) ListFiles(root string, keywords string) ([][2]interface{}, error) 
                 matches = append(matches, [2]interface{}{path, ignored})
                 return filepath.SkipDir
             }
-            if !info.IsDir() && info.Name() == keyword {
-                ignored := checkAttribute(path, "com.dropbox.ignored")
-                matches = append(matches, [2]interface{}{path, ignored})
+            if !folderOnly {
+                if !info.IsDir() && info.Name() == keyword {
+                    ignored := checkAttribute(path, "com.dropbox.ignored")
+                    matches = append(matches, [2]interface{}{path, ignored})
+                }
+                if matched, _ := filepath.Match(keyword, info.Name()); matched {
+                    ignored := checkAttribute(path, "com.dropbox.ignored")
+                    matches = append(matches, [2]interface{}{path, ignored})
+                }
             }
         }
         count++
@@ -154,7 +160,7 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:  "Dropbox Sync Skipper",
+		Title:  "Dropbox Skipper",
 		Width:  1024,
 		Height: 768,
 		MinWidth: 640,

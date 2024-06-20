@@ -1,19 +1,7 @@
-# README
+# Dropbox Sync Skipper
 
-## About
+- If you want to sync your source code with Dropbox but exclude specific files or folders (e.g., node_modules or dist folders), this app allows you to apply Dropbox exclusion settings in bulk based on specified conditions. The app operates according to Dropbox's specifications: it uses NTFS alternate data streams on Windows and extended attributes on macOS/Linux. The content of the files themselves is not altered, but use it at your own risk.
 
-This is the official Wails React-TS template.
+---
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
-
-## Live Development
-
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
-
-## Building
-
-To build a redistributable, production mode package, use `wails build`.
+- あなたがソースコードを Dropbox で同期したい場合に、特定のファイルやフォルダ（例えば、node_modules フォルダや dist フォルダ）は除外したいことがあるでしょう。このアプリは条件を指定して一括で Dropbox の除外設定を適用できます。動作原理は Dropbox の仕様に準じており、Windows では NTFS の代替ファイルストリーム、MacOS/Linux では拡張属性を書き換えます。ファイルの内容自体は変更されませんが、自己責任でお使いください。

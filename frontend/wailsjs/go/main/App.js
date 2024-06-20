@@ -6,8 +6,8 @@ export function CancelSearch() {
   return window['go']['main']['App']['CancelSearch']();
 }
 
-export function ListFiles(arg1, arg2) {
-  return window['go']['main']['App']['ListFiles'](arg1, arg2);
+export function ListFiles(arg1, arg2, arg3) {
+  return window['go']['main']['App']['ListFiles'](arg1, arg2, arg3);
 }
 
 export function RemoveDropboxIgnored(arg1) {

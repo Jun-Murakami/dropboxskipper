@@ -12,6 +12,8 @@ import {
   CssBaseline,
   ThemeProvider,
   createTheme,
+  Switch,
+  FormControlLabel,
 } from '@mui/material';
 import { DarkModeSwitch } from './DarkModeSwitch';
 
@@ -19,6 +21,7 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(localStorage.getItem('isDarkMode') === 'true' || false);
   const [keyword, setKeyword] = useState<string>(localStorage.getItem('keyword') || '');
   const [isSearcing, setIsSearcing] = useState<boolean>(false);
+  const [isFolderOnly, setIsFolderOnly] = useState<boolean>(false);
   const [path, setPath] = useState<string>(localStorage.getItem('path') || '');
   const [files, setFiles] = useState<Array<[string, boolean]>>([]);
   const [message, setMessage] = useState<string>('');
@@ -66,12 +69,14 @@ function App() {
 
   const openInExplorer = (path: string) => {
     const isWindows = navigator.userAgent.includes('Windows');
-    const url = isWindows ? `file:///${path}` : `file://${path}`;
+    const filePath = path.includes('.') ? path.substring(0, path.lastIndexOf(isWindows ? '\\' : '/')) : path;
+    const url = isWindows ? `file:///${filePath.replace(/\//g, '\\')}` : `file://${filePath}`;
     BrowserOpenURL(url);
   };
 
   const handleSearch = async () => {
     try {
+      setFiles([]);
       if (isSearcing) {
         setIsSearcing(false);
         await CancelSearch();
@@ -87,7 +92,7 @@ function App() {
       }
       updateHistory(keywordHistory, setKeywordHistory, keyword, 'keywordHistory');
       setIsSearcing(true);
-      const result: Array<[string, boolean]> = await ListFiles(path, keyword);
+      const result: Array<[string, boolean]> = await ListFiles(path, keyword, isFolderOnly);
       if (result === null) {
         setMessage('null');
         return;
@@ -199,7 +204,7 @@ function App() {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label='Search Keyword (Folder or file name. Separate with ";" for multiple keywords.)'
+                label='Search keyword (Folder or file name. Separate with ";" for multiple keywords.)'
                 size='small'
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
@@ -236,6 +241,11 @@ function App() {
         <Box sx={{ mt: 1 }}>
           <Typography variant='body1'>{message}</Typography>
           <Box sx={{ position: 'absolute', right: 0, bottom: 10, mr: 1 }}>
+            <FormControlLabel
+              control={<Switch checked={isFolderOnly} onChange={(e) => setIsFolderOnly(e.target.checked)} />}
+              label='Search folder only'
+              sx={{ color: theme.palette.text.secondary }}
+            />
             <DarkModeSwitch onChange={handleDarkMode} checked={isDarkMode} />
           </Box>
         </Box>

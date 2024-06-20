@@ -3,7 +3,7 @@
 
 export function CancelSearch():Promise<void>;
 
-export function ListFiles(arg1:string,arg2:string):Promise<Array<any>>;
+export function ListFiles(arg1:string,arg2:string,arg3:boolean):Promise<Array<any>>;
 
 export function RemoveDropboxIgnored(arg1:Array<string>):Promise<Array<string>>;
 

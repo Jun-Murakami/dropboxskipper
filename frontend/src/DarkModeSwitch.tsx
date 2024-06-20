@@ -7,7 +7,7 @@ export const DarkModeSwitch = (props: SwitchProps) => {
     <Switch
       {...props}
       sx={{
-        height: 34,
+        height: 38,
 
         '& .MuiSwitch-switchBase': {
           marginTop: 0.3,
